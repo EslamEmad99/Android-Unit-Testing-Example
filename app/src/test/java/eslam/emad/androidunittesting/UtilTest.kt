@@ -1,6 +1,7 @@
 package eslam.emad.androidunittesting
 
 import com.google.common.truth.Truth.assertThat
+import eslam.emad.androidunittesting.Util.passwordValidation
 import eslam.emad.androidunittesting.Util.register
 import org.junit.Test
 
@@ -123,6 +124,78 @@ class UtilTest{
         val result = register(userName, password, passwordConfirmation)
 
         //assert
+        assertThat(result).isTrue()
+    }
+
+    @Test
+    fun `passwordValidation() with empty password then return false`(){
+        // arrange
+        val password = "     "
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `passwordValidation() without capital letters then return false`(){
+        // arrange
+        val password = "abc123?!@#"
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `passwordValidation() without small letters then return false`(){
+        // arrange
+        val password = "ABC123?!@#"
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `passwordValidation() without numbers then return false`(){
+        // arrange
+        val password = "abcABC?!@#"
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `passwordValidation() without special characters then return false`(){
+        // arrange
+        val password = "abc123ABC"
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
+        assertThat(result).isFalse()
+    }
+
+    @Test
+    fun `passwordValidation() with valid password then return true`(){
+        // arrange
+        val password = "abcdfgAAVVABC124563?!$%@#يسبيل"
+
+        // act
+        val result = passwordValidation(password)
+
+        // assert
         assertThat(result).isTrue()
     }
 }
